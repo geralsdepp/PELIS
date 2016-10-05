@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1475279215 source:e:\programación i\pelis\pelis\main.c
+	<stdio.h>
+	<stdlib.h>
+	"misFunciones.h"
+
+1475279597 source:e:\programación i\misfunciones.h
+
+1475279597 e:\programación i\pelis\pelis\misfunciones.h
+
+1475645308 source:j:\programación i\misfunciones.h
+
