@@ -8,5 +8,19 @@
 
 1475279597 e:\programación i\pelis\pelis\misfunciones.h
 
-1475645308 source:j:\programación i\misfunciones.h
+1475729702 source:j:\programación i\misfunciones.h
+
+1475817748 source:c:\users\geraldine\desktop\pelis\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"misFunciones.h"
+
+1475815469 c:\users\geraldine\desktop\pelis\misfunciones.h
+
+1475817959 source:c:\users\geraldine\desktop\pelis\misfunciones.c
+	<stdio.h>
+	<stdlib.h>
+	"misFunciones.h"
+	<string.h>
 

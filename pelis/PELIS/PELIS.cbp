@@ -31,15 +31,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../../misFunciones.h">
-			<Option compile="1" />
-		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="misFunciones.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="misFunciones.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

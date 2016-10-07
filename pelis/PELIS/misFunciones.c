@@ -2,18 +2,38 @@
 #include <stdlib.h>
 #include "misFunciones.h"
 #include <string.h>
+#define PELICULAS 5
+#define DIRECTORES 5
+#define NACIONALIDADES 5
+
+
+ int getOpcion(int opc)
+{
+    char aux_op[255];
+    int op;
+
+    printf("1.Alta de pelicula.\n2.Modificar datos de una pelicula\n3.Baja de pelicula\n4.Alta de DIRECTOR\n.5.Eliminar director\n6.Informar\n7.Listar\n8.Salir\n");
+
+    if(!getStringNumeros("Ingrese una opcion: \n", aux_op))
+    {
+        printf("Debe ingresar un  numero!!");
+    }
+    op = atoi(aux_op);
+
+    return op;
+}
 /** \brief Inicializa el estado en un array de productos
  * \param array peliculas es el array a ser buscado
- * \param arrayLargo es la longitud de mi array
+ * \param cantElementos es la longitud de mi array
  * \param valor es el valor que se asignara a estado
  * \return -
  *
  */
-void estado(datosPelicula arrayPeliculas[], int arrayLargo[],int valor)
+void iniciarDatosArray(datosPelicula arrayPeliculas[], int cantElementos,int valor)
 {
     int i;
 
-    for(i=0;i<arrayLargo;i++)
+    for(i=0;i<cantElementos;i++)
     {
         arrayPeliculas[i].idEstado = valor;
     }
@@ -23,24 +43,31 @@ void estado(datosPelicula arrayPeliculas[], int arrayLargo[],int valor)
 
 /** \brief Busca el primer lugar no utilizado en el array.
  * \param arrayPeliculas es el array donde buscar.
- * \param arrayLargo indica la longitud del array.
+ * \param cantElementos indica la longitud del array.
  * \return Si no hay lugares libres (-1) y si hay lugar libre (1).
  *
  */
 
- int buscarLugarVacio(datosPelicula arrayPeliculas[],int arrayLargo[])
+ int buscarPrimerOcurrencia(datosPelicula arrayPeli[],int cantElementos, int valor)
  {
      int i;
 
-     for(i=0;i<arrayLargo;i++) //Recorre el largo hasta
+     for(i=0;i<cantElementos;i++) //Recorre el largo hasta
      {
-         if(arrayPeliculas[i].idEstado==0) // encontrar alguna pelicula que el estado sea 0.
+         if((arrayPeli[i].idEstado == 0 || arrayPeli[i].idEstado == -1)&& valor == -1 ) // encontrar alguna pelicula que el estado sea 0.
          {
              return i; // en ese caso devuelve la posicion en la que se encuentra esa pelicula dentro del array
          }
+         else
+         {
+             if(valor == arrayPeli[i].idPelicula && arrayPeli[i].idEstado == 1)
+             {
+                 return i;
+             }
+         }
      }
 
-     return -1;// y si no encontrase ninguno devuelve (-1).
+     return -1;// y si no encontrase ninguno devuelve (-1)(LLENO)
  }
 
 
@@ -53,10 +80,10 @@ void estado(datosPelicula arrayPeliculas[], int arrayLargo[],int valor)
   * \return
   *
   */
-  int buscarPeliculaCodigo(datosPelicula arrayPeliculas[], int arrayLargo[],int id)
+  int buscarIdPeliculas(datosPelicula arrayPeliculas[], int cantElementos,int id)
   {
       int i;
-      for(i=0; i<arrayLargo; i++)
+      for(i=0; i<cantElementos; i++)
       {
           if(arrayPeliculas[i].idPelicula == id && arrayPeliculas[i].idEstado == 1)
           {
@@ -66,59 +93,66 @@ void estado(datosPelicula arrayPeliculas[], int arrayLargo[],int valor)
       return -1;
   }
 
-
-/** \brief Inicializa el estado en un array de productos
+/*******************************************************************************/
+/**\brief Inicializa el estado en un array de productos
  * \param array peliculas es el array a ser buscado
- * \param arrayLargo es la longitud de mi array
+ * \param cantElementos es la longitud de mi array
  * \param valor es el valor que se asignara a estado
  * \return -
  *
  */
 
-void estado(datosDirector arrayDirector[], int arrayLargo[],int valor)
+void iniciarDatosArrayDirector(datosDirector arrayDire[], int cantElementos,int valor)
 {
     int i;
 
-    for(i=0;i<arrayLargo;i++)
+    for(i=0;i<cantElementos;i++)
     {
-        arrayDirector()[i].idEstado = valor;
+        arrayDire[i].idEstado = valor;
     }
 }
 
 
 /** \brief Busca el primer lugar no utilizado en el array.
  * \param arrayPeliculas es el array donde buscar.
- * \param arrayLargo indica la longitud del array.
+ * \param cantElementos indica la longitud del array.
  * \return Si no hay lugares libres (-1) y si hay lugar libre (1).
  *
  */
 
- int buscarLugarVacio(datosDirector arrayDirector[],int arrayLargo[])
+ int buscarPrimerOcurrenciaDirectores(datosDirector arrayDirector[],int cantElementos,int valor)
  {
      int i;
 
-     for(i=0;i<arrayLargo;i++) //Recorre el largo hasta
+     for(i=0;i<cantElementos;i++) //Recorre el largo hasta
      {
-         if(arrayDirector[i].idEstado==0) // encontrar alguna pelicula que el estado sea 0.
+         if((arrayDirector[i].idEstado == 0 || arrayDirector[i].idEstado == -1)&& valor == -1 ) // encontrar alguna pelicula que el estado sea 0.
          {
              return i; // en ese caso devuelve la posicion en la que se encuentra esa pelicula dentro del array
+         }
+         else
+         {
+             if(valor == arrayDirector[i].idDirector && arrayDirector[i].idEstado == 1)
+             {
+                 return i;
+             }
          }
      }
 
      return -1;// y si no encontrase ninguno devuelve (-1).
  }
 
- /** \brief Busca
+ /** \brief Busca el id para modificar datos del director
   *
-  * \param
-  * \param
+  * \param arrayDirector: es el array donde buscar
+  * \param cantElementos: indica la longitud del array
   * \return
   *
   */
-  int buscarDirectorCodigo(datosDirector arrayDirector[], int arrayLargo[],int id)
+  int buscarIdDirector(datosDirector arrayDirector[], int cantElementos,int id)
   {
       int i;
-      for(i=0; i<arrayLargo; i++)
+      for(i=0; i<cantElementos; i++)
       {
           if(arrayDirector[i].idDirector == id && arrayDirector[i].idEstado == 1)
           {
@@ -174,20 +208,20 @@ char getChar(char mensaje[])
     scanf("%c",&auxiliar);
     return auxiliar;
 }
-/**
- * \brief Genera un número aleatorio
- * \param desde Número aleatorio mínimo
- * \param hasta Número aleatorio máximo
- * \param iniciar Indica si se trata del primer número solicitado 1 indica que si
- * \return retorna el número aleatorio generado
- *
- */
-char getNumeroAleatorio(int desde , int hasta, int iniciar)
-{
-    if(iniciar)
-        srand (time(NULL));
-    return desde + (rand() % (hasta + 1 - desde)) ;
-}
+///**
+// * \brief Genera un número aleatorio
+// * \param desde Número aleatorio mínimo
+// * \param hasta Número aleatorio máximo
+// * \param iniciar Indica si se trata del primer número solicitado 1 indica que si
+// * \return retorna el número aleatorio generado
+// *
+// */
+//char getNumeroAleatorio(int desde , int hasta, int iniciar)
+//{
+//    if(iniciar)
+//        rand (time(NULL));
+//    return desde + (rand() % (hasta + 1 - desde)) ;
+//}
 
 
 /**
@@ -336,7 +370,7 @@ int getStringLetras(char mensaje[],char input[])
  */
 int getStringNumeros(char mensaje[],char input[])
 {
-    char aux[256];
+    char aux[255];
     getString(mensaje,aux);
     if(esNumerico(aux))
     {

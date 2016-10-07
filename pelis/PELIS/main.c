@@ -2,206 +2,205 @@
 #include <stdlib.h>
 #include <string.h>
 #include "misFunciones.h"
-#define PELICULAS 1000
-#define DIRECTORES 500
-#define NACIONALIDADES 500
-#define ESTADOS 3
+#define PELICULAS 5
+#define DIRECTORES 5
+#define NACIONALIDADES 5
 
 int main()
 {
-    //ARRAY DE PELICULAS
-    datosPelicula arrayPeliculas[PELICULAS];
-    datosDirector arrayDirector[DIRECTORES];
-    datosNacionalidad arrayNacionalidad[NACIONALIDADES];
-    datosEstado arrayEstado[ESTADOS];
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    datosPelicula auxPelicula;
-    //dar de alta a peliculas
-    char auxTitulo[50];
-    int auxAnio;
-    int idPeliculasAux;
-    char auxNacionalidad[50];
-    char auxDirector[50];
-    int auxPELICULAS;
 
-    char idPeliculasAuxStr;
-    char auxPELICULASStr;
-    char auxAnioStr;
-    char auxNacionalidadStr;
-    char auxDirectorStr;
-    //dar de alta directores
-    char idDirectorAuxSrt;
-    char idDirectorAux;
-    char auxDIRECTORESStr;
-    char nombreDir;
+    int opcion = 0, ultimo_id = 0;
+    char aux_Titulo[50], aux_Nacionalidad[50], aux_Director[50],aux_ID[3], aux_AnioSTR[4];
+    int aux_Fecha;
+    int  aux_Anio, LugarLibrePeli, LugarOcupadoPeli, LugarLibreDire, LugarOcupadoDire;
+    int i, getNum;
+    int flag = 0;
+
+    datosPelicula arrayPeli[PELICULAS];
+    datosDirector arrayDire[DIRECTORES];
 
 
-    int indiceLugarLibre;
-    int indiceEncontrado;
-    int opcion = 0;
-    int i,j;
+    iniciarDatosArray(arrayPeli, PELICULAS, 0); ///**< Inicio los datos en 0 (VACIO) */
 
-    estado(arrayPeliculas[PELICULAS], PELICULAS, 0);
-
-
-    while(opcion>=1 || opcion<=7)
+    while(opcion != 6)
     {
-        printf("Ingrese una opcion: ");
-        opcion = getInt("1.Alta de pelicula.\n2.Modificar datos de una pelicula\n3.Baja de pelicula\n4.Alta de DIRECTOR\n.5.Eliminar director\n6.Informar\n7.Listar\n");
 
-        switch(opcion)
-        {
-        case 1:
-               indiceLugarLibre = buscarLugarVacio(arrayPeliculas,PELICULAS);
+        opcion = getOpcion(opcion);
 
-               if(indiceLugarLibre == -1)
-               {
-                   printf("\n\nNO HAY MAS LUGARES LIBRES!!\n");
-               }
-               printf("\nALTA\n");
+            switch(opcion)
+            {
+            case 1:
+                LugarLibrePeli = buscarPrimerOcurrencia(arrayPeli, PELICULAS,-1);
 
-               if(!getStringNumeros("Ingrese el codigo: ",idPeliculasAuxStr))
-               {
-                   printf("El codigo debe ser numerico\n");
-                   break;
-               }
-               idPeliculasAux = atoi(idPeliculasAuxStr);
+                if(LugarLibrePeli == -1)
+                {
+                    printf("\n\nNO HAY MAS LUGARES LIBRES!!\n");
+                    break;
+                }
 
-               if(buscarPeliculaCodigo(arrayPeliculas, PELICULAS, idPeliculasAux) != -1)
-               {
-                   printf("\n\nEL CODIGO YA EXISTE!!\n");
-                   break;
-               }
-               if(!getStringLetras("Ingrese titulo: ",auxTitulo))
-               {
-                   printf("El titulo debe estar compuesto por letras.\n");
-                   break;
-               }
-               auxPELICULAS = atoi(auxPELICULASStr);
+                printf("\nALTA\n");
 
-               if(!getStringNumerosFlotantes("Ingrese el anio: ",auxAnioStr))
+                while(flag == 0 )
+                {
+                    if(!getStringLetras("Ingrese titulo: \n",aux_Titulo))
+                    {
+                       system("cls");
+                       printf("El titulo debe estar compuesto por letras.\n");
+                       system("cls");
+                    }
+                    else
+                        flag = 1;
+                }
+
+
+               while(!getStringNumeros("Ingrese el anio: \n",aux_AnioSTR))
                {
+                   system("cls");
                    printf("El año debe ser numerico\n");
+                   system("cls");
                    break;
                }
-               auxAnio = atof(auxAnioStr);
+               aux_Anio = atoi(aux_AnioSTR);
 
-               arrayPeliculas[indiceLugarLibre].idPelicula = idPeliculasAux;
-               strcpy(arrayPeliculas[indiceLugarLibre].titulo,auxTitulo);
-               arrayPeliculas[indiceLugarLibre].anio = auxAnio;
-               arrayPeliculas[indiceLugarLibre].idDirector = auxDirector;
-               arrayPeliculas[indiceLugarLibre].idNacionalidad = auxNacionalidad;
-               arrayPeliculas[indiceLugarLibre].idEstado = 1;
-            break;
-        case 2:
-            if(!getStringNumeros("Ingrese el ID a modificar: ",idPeliculasAuxStr));
-            {
-                printf("El ID de la pelicula debe ser numerico!!\n");
-                break;
-            }
-            idPeliculasAux = atoi(idPeliculasAuxStr);
-            indiceEncontrado = buscarPeliculaCodigo(arrayPeliculas, PELICULAS,idPeliculasAux);
-            if(indiceEncontrado == -1)
-            {
-                printf("\n\n No se encuentra ese codigo\n");
-                break;
-            }
-            if(!getStringLetras("Ingrese el titulo de la pelicula: ",auxPelicula));
-            {
-                printf("El titulo debe estar compuesto por letras!!\n");
-                break;
-            }
-
-            if(!getStringNumeros("Ingrese el anio: ",auxAnioStr));
-            {
-                printf("Ingrese el anio de forma numerica!!\n");
-                break;
-            }
-            auxAnio = atoi(auxAnioStr);
-
-            if(!getStringLetras("Ingrese Nacionalidad: ",auxNacionalidadStr));
-            {
-                printf("La nacionalidad debe estar compuesta por letras!!\n");
-                break;
-            }
-            if(!getStringLetras("Ingrese director: ",auxDirectorStr));
-            {
-                printf("El director ingresado no existe: ");
-            }
-            strcpy(arrayPeliculas[indiceEncontrado].titulo,auxTitulo);
-            arrayPeliculas[indiceEncontrado].anio = auxAnio;
-            strcpy(arrayPeliculas[indiceEncontrado].idNacionalidad,auxNacionalidad);
-            strcpy(arrayPeliculas[indiceEncontrado].idDirector,auxDirector);
-            arrayPeliculas[indiceEncontrado].idEstado = 1;
-            break;
-
-        case 3:
-            if(!getStringNumeros("Ingrese ID de la pelicula: ",idPeliculasAuxStr))
-            {
-                printf("El ID ingresado debe ser numerico!!\n");
-                break;
-            }
-            idPeliculasAux = atoi(idPeliculasAuxStr);
-            indiceEncontrado = buscarLugarVacio(arrayPeliculas,PELICULAS,idPeliculasAux);
-            if(indiceEncontrado == -1)
-            {
-                printf("\n\nNo se encuentra el codigo\n");
-                break;
-            }
-            arrayPeliculas[indiceEncontrado].idEstado = 0;
-
-            break;
-        case 4:
-            indiceLugarLibre = buscarLugarVacio(arrayDirector,DIRECTORES);
-
-               if(indiceLugarLibre == -1)
+               while(!getStringLetras("Ingrese la Nacionalidad: \n",aux_Nacionalidad))
                {
-                   printf("\n\nNO HAY MAS LUGARES LIBRES!!\n");
-               }
-               printf("\nALTA\n");
-
-               if(!getStringNumeros("Ingrese el codigo: ",idDirectorAuxSrt));
-               {
-                   printf("El codigo debe ser numerico\n");
+                   system("cls");
+                   printf("La Nacionalidad debe contener solo letras!!\n");
+                   system("cls");
                    break;
                }
-               idDirectorAux = atoi(idDirectorAuxSrt);
 
-               if(buscarPeliculaCodigo(arrayDirector, DIRECTORES, idDirectorAux) != -1)
+
+               while(!getStringLetras("Ingrese un Director para ésta película: \n",aux_Director))
                {
-                   printf("\n\nEL CODIGO YA EXISTE!!\n");
+                   printf("El Director debe contener solo letras!!\n");
                    break;
                }
-               if(!getStringLetras("Ingrese titulo: ",aux))
-               {
-                   printf("El titulo debe estar compuesto por letras.\n");
-                   break;
-               }
-               auxPELICULAS = atoi(auxPELICULASStr);
 
-               if(!getStringNumerosFlotantes("Ingrese el anio: ",auxAnioStr))
-               {
-                   printf("El año debe ser numerico\n");
-                   break;
-               }
-               auxAnio = atof(auxAnioStr);
 
-               arrayPeliculas[indiceLugarLibre].idPelicula = idPeliculasAux;
-               strcpy(arrayPeliculas[indiceLugarLibre].titulo,auxTitulo);
-               arrayPeliculas[indiceLugarLibre].anio = auxAnio;
-               arrayPeliculas[indiceLugarLibre].idDirector = auxDirector;
-               arrayPeliculas[indiceLugarLibre].idNacionalidad = auxNacionalidad;
-               arrayPeliculas[indiceLugarLibre].idEstado = 1;
+               strcpy(arrayPeli[LugarLibrePeli].titulo,aux_Titulo);
+               strcpy(arrayPeli[LugarLibrePeli].nom.nombre,aux_Nacionalidad);
+               strcpy(arrayPeli[LugarLibrePeli].direc.nombre,aux_Director);
+               arrayPeli[LugarLibrePeli].anio = aux_Anio;
+               arrayPeli[LugarLibrePeli].idEstado = 1;
+               arrayPeli[LugarLibrePeli].idPelicula = ultimo_id + 1;
+               ultimo_id = ultimo_id + 1;
+               printf("PELICULA CARGADA\n");
+
             break;
-        case 5:
-            break;
+
+            case 2:
+                printf("MODIFICAR\n");
+                if(!getStringNumeros("Ingrese el ID a modificar: ",aux_ID))
+                {
+                    printf("El ID debe ser numerico!!\n");
+                    break;
+                }
+
+                LugarOcupadoPeli = buscarPrimerOcurrencia(arrayPeli, PELICULAS, getNum);// getNum es mi ID
+
+                if(LugarOcupadoPeli == -1)
+                {
+                    printf("\n\n No se encuentra ese ID\n");
+                    break;
+                }
+                if(!getStringLetras("Ingrese el titulo de la pelicula: ",aux_Titulo));
+                {
+                    printf("El titulo debe estar compuesto por letras!!\n");
+                    break;
+                }
+
+                if(!getStringNumeros("Ingrese el anio: ",aux_AnioSTR))
+                {
+                    printf("Ingrese el anio de forma numerica!!\n");
+                    break;
+                }
+
+                aux_Anio = atoi(aux_AnioSTR);
+
+                if(!getStringLetras("Ingrese Nacionalidad: ",aux_Nacionalidad))
+                {
+                    printf("La nacionalidad debe estar compuesta por letras!!\n");
+                    break;
+                }
+                if(!getStringLetras("Ingrese director: ",aux_Director))
+                {
+                    printf("El director ingresado no existe: ");
+                }
+
+                strcpy(arrayPeli[LugarOcupadoPeli].titulo,aux_Titulo);
+                arrayPeli[LugarOcupadoPeli].anio = aux_Anio;
+                strcpy(arrayPeli[LugarOcupadoPeli].nom.nombre,aux_Nacionalidad);
+                strcpy(arrayPeli[LugarOcupadoPeli].direc.nombre,aux_Director);
+                arrayPeli[LugarOcupadoPeli].idEstado = 1;
+                break;
+
+            case 3:
+                printf("BORRAR\n");
+
+                if(!getStringNumeros("Ingrese ID que desee borrar: ",aux_ID))
+                {
+                    printf("El ID ingresado debe ser numerico!!\n");
+                    break;
+                }
+
+                getNum = atoi(aux_ID);
+
+                LugarOcupadoPeli = buscarIdPeliculas(arrayPeli, PELICULAS, getNum);
+                printf("%d",LugarOcupadoPeli);
+
+                if(LugarOcupadoPeli == -1)
+                {
+                    printf("\n\nNo se encuentra el codigo\n");
+                    break;
+                }
+                arrayPeli[LugarOcupadoPeli].idEstado = -1;
+
+                break;
+            case 4:
+                printf("NUEVO DIRECTOR");
+                    LugarLibreDire = buscarPrimerOcurrenciaDirectores(arrayDire, DIRECTORES, -1);
+
+                   if(LugarLibreDire == -1)
+                   {
+                       printf("\n\nNO HAY MAS LUGARES LIBRES!!\n");
+                   }
+                   printf("\nALTA\n");
+
+
+                   if(!getStringLetras("Ingrese nombre del nuevo director: ",aux_Director))
+                   {
+                       printf("El titulo debe estar compuesto por letras.\n");
+                       break;
+                   }
+
+                   if(!getStringNumerosFlotantes("Ingrese la fecha de nacimiento: ",aux_Fecha))
+                   {
+                       printf("El año debe ser numerico\n");
+                       break;
+                   }
+
+
+                   strcpy(arrayDire[LugarLibreDire].nombre,aux_Director);
+                   strcpy(arrayDire[LugarLibreDire].nom.nombre,aux_Nacionalidad);
+                   arrayDire[LugarLibreDire].idEstado = 1;
+                break;
+            case 5:
+                break;
+            case 7:
+                printf("LISTAR");
+                for(i = 0; i < PELICULAS; i++)
+                {
+                   if(arrayPeli[i].idEstado == -1)
+                   {
+                       printf("\n%d---%s---%d---%s---%s",arrayPeli[i].idPelicula, arrayPeli[i].titulo, arrayPeli[i].anio, arrayPeli[i].direc, arrayPeli[i].nom);
+                   }
+                }
+                break;
+
+        }
+
     }
-
-    }
-
-
-
-
 
     return 0;
 }
