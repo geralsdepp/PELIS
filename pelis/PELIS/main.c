@@ -10,7 +10,7 @@ int main()
 {
 
     int opcion = 0, ultimo_id = 0;
-    char aux_Titulo[50], aux_Nacionalidad[50], aux_Director[50],aux_ID[3], aux_AnioSTR[4];
+    char aux_Titulo[50], aux_Nacionalidad[50], aux_Director[50],aux_ID[3], aux_AnioSTR[4], seguir = 's';
     int aux_Fecha;
     int  aux_Anio, LugarLibrePeli, LugarOcupadoPeli, LugarLibreDire, LugarOcupadoDire;
     int i, getNum;
@@ -56,7 +56,7 @@ int main()
                while(!getStringNumeros("Ingrese el anio: \n",aux_AnioSTR))
                {
                    system("cls");
-                   printf("El año debe ser numerico\n");
+                   printf("El aÃ±o debe ser numerico\n");
                    system("cls");
                    break;
                }
@@ -71,7 +71,7 @@ int main()
                }
 
 
-               while(!getStringLetras("Ingrese un Director para ésta película: \n",aux_Director))
+               while(!getStringLetras("Ingrese un Director para Ã©sta pelÃ­cula: \n",aux_Director))
                {
                    printf("El Director debe contener solo letras!!\n");
                    break;
@@ -176,7 +176,7 @@ int main()
 
                    if(!getStringNumerosFlotantes("Ingrese la fecha de nacimiento: ",aux_Fecha))
                    {
-                       printf("El año debe ser numerico\n");
+                       printf("El aÃ±o debe ser numerico\n");
                        break;
                    }
 
@@ -186,6 +186,8 @@ int main()
                    arrayDire[LugarLibreDire].idEstado = 1;
                 break;
             case 5:
+                break;
+            case 6:
                 break;
             case 7:
                 printf("LISTAR");
@@ -197,6 +199,9 @@ int main()
                    }
                 }
                 break;
+                case 8:
+                    seguir = 'n';
+                    break;
 
         }
 
